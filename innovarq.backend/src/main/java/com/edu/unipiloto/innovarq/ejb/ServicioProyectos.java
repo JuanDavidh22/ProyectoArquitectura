@@ -37,9 +37,35 @@ public class ServicioProyectos implements IServicioProyecto {
 
     @Override
     public Proyecto financiarProyecto(Proyecto proyecto) {
-        
+        int cantidaddinero = 0;
+        persistencia.update(proyecto);
+        Proyecto pro = (Proyecto) persistencia.findById(Proyecto.class, proyecto.getIdproyecto());
+        if("publicado".equals(pro.getEstado()) || "monitoreo".equals(pro.getEstado())){
+            cantidaddinero = proyecto.getCantidadRecaudada() + pro.getCantidadRecaudada();
+            
+            if(cantidaddinero<pro.getCantidadRecaudar()){
+                pro.setCantidadRecaudada(proyecto.getCantidadRecaudada());
+                
+            }else if(pro.getCantidadRecaudar() == pro.getCantidadRecaudada()){
+                System.out.println("La cantidad de dinero solicitada ya se ha recolectado");
+                
+            }else if(cantidaddinero > pro.getCantidadRecaudar()){
+                cantidaddinero = cantidaddinero - pro.getCantidadRecaudar();
+                pro.setCantidadRecaudada(pro.getCantidadRecaudar());
+                System.out.println("El proyecto completó la inversión necesaria de " + pro.getCantidadRecaudar() + ", le sobran " + cantidaddinero);
+                pro.setEstado("cierre");
+            }
+        }else{
+            System.out.println("el proyecto está cerrado");
+        }
+        persistencia.update(pro);
         return null;
-        
+    }
+
+    @Override
+    public String cambiarEstadoProyecto(Proyecto proyecto) {
+        persistencia.update(proyecto);
+        return proyecto.getTipoProyecto();
     }
     
 }
