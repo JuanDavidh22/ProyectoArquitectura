@@ -10,29 +10,42 @@ import java.io.Serializable;
  *
  * @author juanc
  */
-public class Proyecto implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Proyecto {
 
     private long idproyecto;
+    
+    private String responsable;
 
     private String nombre;
+    
+    private String fechaInicio;
 
     private String fechaLimite;
 
     private Integer cantidadRecaudar;
+    
+    private Integer cantidadRecaudada;
 
     private String descripcion;
-
-    public Proyecto(long idproyecto, String nombre, String fechaLimite, Integer cantidadRecaudar, String descripcion) {
-        this.idproyecto = idproyecto;
-        this.nombre = nombre;
-        this.fechaLimite = fechaLimite;
-        this.cantidadRecaudar = cantidadRecaudar;
-        this.descripcion = descripcion;
+    
+    private String estado;
+    
+    private String tipoProyecto;
+    
+    public Proyecto() {
     }
 
-    public Proyecto() {
+    public Proyecto(long idproyecto, String responsable, String nombre, String fechaInicio, String fechaLimite, Integer cantidadRecaudar, Integer cantidadRecaudada, String descripcion, String estado, String tipoProyecto) {
+        this.idproyecto = idproyecto;
+        this.responsable = responsable;
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaLimite = fechaLimite;
+        this.cantidadRecaudar = cantidadRecaudar;
+        this.cantidadRecaudada = cantidadRecaudada;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.tipoProyecto = tipoProyecto;
     }
 
     public long getIdproyecto() {
@@ -49,6 +62,46 @@ public class Proyecto implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Integer getCantidadRecaudada() {
+        return cantidadRecaudada;
+    }
+
+    public void setCantidadRecaudada(Integer cantidadRecaudada) {
+        this.cantidadRecaudada = cantidadRecaudada;
+    }
+
+    public String getTipoProyecto() {
+        return tipoProyecto;
+    }
+
+    public void setTipoProyecto(String tipoProyecto) {
+        this.tipoProyecto = tipoProyecto;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getFechaLimite() {

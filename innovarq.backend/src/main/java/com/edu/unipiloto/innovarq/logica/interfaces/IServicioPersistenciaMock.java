@@ -4,10 +4,13 @@
  */
 package com.edu.unipiloto.innovarq.logica.interfaces;
 
+import javax.ejb.Local;
+
 /**
  *
  * @author juanc
  */
+@Local
 public interface IServicioPersistenciaMock {
         /**
      * Crea un objeto dentro de la persistencia del sistema.

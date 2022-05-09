@@ -4,10 +4,6 @@
  */
 package com.edu.unipiloto.innovarq.dto;
 
-import java.io.Serializable;
-import java.io.Serializable;
-import java.util.Calendar;
-
 
 /**
  *
@@ -20,7 +16,7 @@ public class Usuario {
 
     private String contraseña;
     
-    private TipoUsuario tipoUsuario;
+    private String tipoUsuario;
     
     private long documento;
 
@@ -31,8 +27,11 @@ public class Usuario {
     private String email;
 
     private String numeroTelefonico;
+    
+    public Usuario() {
+    }
 
-    public Usuario(String login, String contraseña, TipoUsuario tipoUsuario, long documento, String nombres, String apellidos, String email, String numeroTelefonico) {
+    public Usuario(String login, String contraseña, String tipoUsuario, long documento, String nombres, String apellidos, String email, String numeroTelefonico) {
         this.login = login;
         this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
@@ -42,10 +41,6 @@ public class Usuario {
         this.email = email;
         this.numeroTelefonico = numeroTelefonico;
     }
-
-    public Usuario() {
-    }
-
     
     public String getLogin() {
         return login;
@@ -64,15 +59,13 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public TipoUsuario getTipoUsuario() {
+    public String getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+    public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
-    
 
     public long getDocumento() {
         return documento;

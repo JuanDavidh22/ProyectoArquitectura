@@ -4,8 +4,9 @@
  */
 package com.edu.unipiloto.innovarq.servicios;
 
-
+import com.edu.unipiloto.innovarq.dto.Proyecto;
 import com.edu.unipiloto.innovarq.dto.Usuario;
+import com.edu.unipiloto.innovarq.logica.interfaces.IServicioProyecto;
 import com.edu.unipiloto.innovarq.logica.interfaces.IServicioRegistroMockLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,43 +22,38 @@ import javax.ws.rs.core.MediaType;
  *
  * @author juanc
  */
-@Path("/Usuario")
+
+@Path("/Proyecto")
 @Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class registroService {
-
+public class proyectoService {
+    
     @EJB
-    private IServicioRegistroMockLocal registroEJB;
-
+    private IServicioProyecto proyectoEJB;
+    
     @POST
-    @Path("/registrarUsuarios")
+    @Path("registraProyecto/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario registrarUsuarios(Usuario ofertas) {
-        registroEJB.registrar(ofertas);
-        return ofertas;
-    }
-    
-//    @PUT
-//    @Path("ActualizarUsuario/")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Usuario ActualizarUsuario(Usuario ofertas) {
-//        ofertaEJB.registrar(ofertas);
-//        return ofertas;
-//    }
-
-    @GET
-    @Path("/obtenerUsuarios")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Usuario> getTodasLasOfertas() {
-        return registroEJB.darUsuarios();
+    public Proyecto registrarUsuarios(Proyecto proyecto) {
+        proyectoEJB.agregarProyecto(proyecto);
+        return proyecto;
     }
     
     @GET
+    @Path("obtenerProyectos/")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getHola() {
-        return "hola";
+    public List<Proyecto> getTodasLosProyectos() {
+        return proyectoEJB.getProyectos();
     }
+    
+    @POST
+    @Path("financiarProyecto/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Proyecto financiarProyectos(Proyecto proyecto) {
+        proyectoEJB.financiarProyecto(proyecto);
+        return proyecto;
+    }
+    
 }

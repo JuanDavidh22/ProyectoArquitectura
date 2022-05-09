@@ -5,7 +5,6 @@
 package com.edu.unipiloto.innovarq.persistencia;
 
 import com.edu.unipiloto.innovarq.dto.Proyecto;
-import com.edu.unipiloto.innovarq.dto.TipoUsuario;
 import com.edu.unipiloto.innovarq.dto.Usuario;
 import java.util.ArrayList;
 import com.edu.unipiloto.innovarq.logica.interfaces.IServicioPersistenciaMock;
@@ -24,11 +23,14 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMock {
 
     public ServicioPersistenciaMock() {
 
-        usuarios = new ArrayList<Usuario>();    
-        usuarios.add(new Usuario("juancho", "juancho123", TipoUsuario.Emprendedor, 1000000, "Juan David", "Herrera Hernandez", "juancho@mail.com", "3000000"));
 
+//(String login, String contraseña, String tipoUsuario, long documento, String nombres, String apellidos, String email, String numeroTelefonico) {
+        usuarios = new ArrayList<Usuario>();    
+        usuarios.add(new Usuario("juancho", "juancho123", "Emprendedor", 1000000, "Juan David", "Herrera Hernandez", "juancho@mail.com", "3000000"));
+        usuarios.add(new Usuario("andres", "andres123", "Financiador", 1000001, "Andres David", "Guevara Hernandez", "andres@mail.com", "3000033"));
         proyectos = new ArrayList<Proyecto>();
-        proyectos.add(new Proyecto(1, "recoleccion de aguas", "2022/02/22", 20000, "Proyecto basado en la recoleccion de aguas en bogota"));
+//        long idproyecto, String responsable, String nombre, String fechaInicio, String fechaLimite, Integer cantidadRecaudar, Integer cantidadRecaudada, String descripcion, String estado, String tipoProyecto) {
+        proyectos.add(new Proyecto(1, "juancho","recoleccion de aguas", "2022/02/22","2023/02/22", 20000, 100, "Proyecto basado en la recoleccion de aguas en bogota", "publicado","Gobierno"));
     }
 
     @Override

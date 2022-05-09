@@ -17,6 +17,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ServicioRegistroMock implements IServicioRegistroMockLocal{
+    
     private IServicioPersistenciaMock persistencia;
 
     public ServicioRegistroMock() {
