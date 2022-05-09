@@ -14,6 +14,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -54,10 +55,9 @@ public class registroService {
     public List<Usuario> getTodasLasOfertas() {
         return registroEJB.darUsuarios();
     }
-    
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getHola() {
-        return "hola";
+    @Path("UsuarioPorId/{id}")
+    public Usuario getProyectoPorId(@PathParam("id") String id) {
+        return registroEJB.darUsuarios().get(Math.toIntExact(Integer.parseInt(id)));
     }
 }

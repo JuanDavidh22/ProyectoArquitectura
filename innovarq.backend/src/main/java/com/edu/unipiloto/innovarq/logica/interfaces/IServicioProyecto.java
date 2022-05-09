@@ -4,6 +4,7 @@
  */
 package com.edu.unipiloto.innovarq.logica.interfaces;
 
+import com.edu.unipiloto.innovarq.dto.Financiar;
 import com.edu.unipiloto.innovarq.dto.Proyecto;
 import java.util.List;
 import javax.ejb.Local;
@@ -19,7 +20,8 @@ public interface IServicioProyecto {
 
     public List<Proyecto> getProyectos();
     
-    public Proyecto financiarProyecto(Proyecto proyecto);
+    public Proyecto financiarProyecto(Financiar financiar);
     
     public String cambiarEstadoProyecto(Proyecto proyecto);
+    
 }

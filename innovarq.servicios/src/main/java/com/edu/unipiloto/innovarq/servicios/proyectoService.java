@@ -4,6 +4,7 @@
  */
 package com.edu.unipiloto.innovarq.servicios;
 
+import com.edu.unipiloto.innovarq.dto.Financiar;
 import com.edu.unipiloto.innovarq.dto.Proyecto;
 import com.edu.unipiloto.innovarq.dto.Usuario;
 import com.edu.unipiloto.innovarq.logica.interfaces.IServicioProyecto;
@@ -15,6 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -42,18 +44,24 @@ public class proyectoService {
     }
     
     @GET
-    @Path("obtenerProyectos/")
+    @Path("/obtenerProyectos")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Proyecto> getTodasLosProyectos() {
         return proyectoEJB.getProyectos();
     }
     
     @POST
-    @Path("financiarProyecto/")
+    @Path("/financiarProyecto")
     @Produces(MediaType.APPLICATION_JSON)
-    public Proyecto financiarProyectos(Proyecto proyecto) {
-        proyectoEJB.financiarProyecto(proyecto);
-        return proyecto;
+    public Proyecto financiarProyectos(Financiar financiar) {
+        proyectoEJB.financiarProyecto(financiar);
+        return proyectoEJB.getProyectos().get(Math.toIntExact(financiar.getIdProyecto()));
+    }
+    
+    @GET
+    @Path("proyectoPorId/{id}")
+    public Proyecto getProyectoPorId(@PathParam("id") Long id) {
+        return proyectoEJB.getProyectos().get(Math.toIntExact(id));
     }
     
 }

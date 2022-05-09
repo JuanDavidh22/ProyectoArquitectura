@@ -4,6 +4,7 @@
  */
 package com.edu.unipiloto.innovarq.ejb;
 
+import com.edu.unipiloto.innovarq.dto.Financiar;
 import com.edu.unipiloto.innovarq.dto.Proyecto;
 import com.edu.unipiloto.innovarq.dto.Usuario;
 import com.edu.unipiloto.innovarq.logica.interfaces.IServicioPersistenciaMock;
@@ -27,13 +28,13 @@ public class ServicioProyectos implements IServicioProyecto {
 
     @Override
     public Proyecto agregarProyecto(Proyecto proyecto) {
-        
+
         Usuario user = (Usuario) persistencia.findById(Usuario.class, proyecto.getResponsable());
-        
-        if(user.getTipoUsuario().equals("Emprendedor")){
+
+        if (user.getTipoUsuario().equals("Emprendedor")) {
             persistencia.create(proyecto);
-        return proyecto;
-        }else{
+            return proyecto;
+        } else {
             return null;
         }
     }
@@ -44,32 +45,39 @@ public class ServicioProyectos implements IServicioProyecto {
     }
 
     @Override
-    public Proyecto financiarProyecto(Proyecto proyecto) {
+    public Proyecto financiarProyecto(Financiar financiar) {
         int cantidaddinero = 0;
 
-        //falra mirar si el usuario es emprendedor o financiador
-        
-        Proyecto pro = (Proyecto) persistencia.findById(Proyecto.class, proyecto.getIdproyecto());
-        
-        if ("publicado".equals(pro.getEstado()) || "monitoreo".equals(pro.getEstado())) {
-            cantidaddinero = proyecto.getCantidadRecaudada() + pro.getCantidadRecaudada();
+        Usuario user = (Usuario) persistencia.findById(Usuario.class, financiar.getLogin());
 
-            if (cantidaddinero < pro.getCantidadRecaudar()) {
-                pro.setCantidadRecaudada(proyecto.getCantidadRecaudada());
+        Proyecto pro = (Proyecto) persistencia.findById(Proyecto.class, financiar.getIdProyecto());
 
-            } else if (pro.getCantidadRecaudar() == pro.getCantidadRecaudada()) {
-                System.out.println("La cantidad de dinero solicitada ya se ha recolectado");
+        if (user.getTipoUsuario().equals("Financiador")) {
 
-            } else if (cantidaddinero > pro.getCantidadRecaudar()) {
-                cantidaddinero = cantidaddinero - pro.getCantidadRecaudar();
-                pro.setCantidadRecaudada(pro.getCantidadRecaudar());
-                System.out.println("El proyecto completó la inversión necesaria de " + pro.getCantidadRecaudar() + ", le sobran " + cantidaddinero);
-                pro.setEstado("cierre");
+            if ("publicado".equals(pro.getEstado()) || "monitoreo".equals(pro.getEstado())) {
+                cantidaddinero = financiar.getValorDonar() + pro.getCantidadRecaudada();
+
+                if (cantidaddinero < pro.getCantidadRecaudar()) {
+                    pro.setCantidadRecaudada(cantidaddinero);
+                    persistencia.update(pro);
+
+                } else if (pro.getCantidadRecaudar() == pro.getCantidadRecaudada()) {
+                    System.out.println("La cantidad de dinero solicitada ya se ha recolectado");
+
+                } else if (cantidaddinero > pro.getCantidadRecaudar()) {
+                    cantidaddinero = cantidaddinero - pro.getCantidadRecaudar();
+                    pro.setCantidadRecaudada(pro.getCantidadRecaudar());
+                    System.out.println("El proyecto completó la inversión necesaria de " + pro.getCantidadRecaudar() + ", le sobran " + cantidaddinero);
+                    pro.setEstado("cierre");
+                    persistencia.update(pro);
+                }
+            } else {
+                System.out.println("el proyecto está cerrado");
             }
+            
         } else {
-            System.out.println("el proyecto está cerrado");
+            System.out.println("Usted es un emprendedor y no puede realizar donaciones a proyectos");
         }
-        persistencia.update(pro);
         return pro;
     }
 

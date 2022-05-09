@@ -8,7 +8,6 @@ import com.edu.unipiloto.innovarq.dto.Proyecto;
 import com.edu.unipiloto.innovarq.dto.Usuario;
 import java.util.ArrayList;
 import com.edu.unipiloto.innovarq.logica.interfaces.IServicioPersistenciaMock;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,33 +22,47 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMock {
 
     public ServicioPersistenciaMock() {
 
-
 //(String login, String contraseña, String tipoUsuario, long documento, String nombres, String apellidos, String email, String numeroTelefonico) {
-        usuarios = new ArrayList<Usuario>();    
-        usuarios.add(new Usuario("juancho", "juancho123", "Emprendedor", 1000000, "Juan David", "Herrera Hernandez", "juancho@mail.com", "3000000"));
-        usuarios.add(new Usuario("andres", "andres123", "Financiador", 1000001, "Andres David", "Guevara Hernandez", "andres@mail.com", "3000033"));
+        usuarios = new ArrayList<Usuario>();
+        usuarios.add(new Usuario("juancho", "juancho123", "Emprendedor", 1000000, "Juan David", "Herrera Hernandez", "juancho@mail.com", "30000032"));
+        usuarios.add(new Usuario("julian", "julian123", "Emprendedor", 1000001, "Julian ", "Lopez", "julian@mail.com", "30000678"));
+        usuarios.add(new Usuario("andres", "andres123", "Financiador", 1000002, "Andres David", "Guevara Hernandez", "andres@mail.com", "3000033"));
+        usuarios.add(new Usuario("kevin", "kevin123", "Financiador", 1000003, "Kevin ", "Rico", "kevin@mail.com", "30000768"));
         proyectos = new ArrayList<Proyecto>();
 //        long idproyecto, String responsable, String nombre, String fechaInicio, String fechaLimite, Integer cantidadRecaudar, Integer cantidadRecaudada, String descripcion, String estado, String tipoProyecto) {
-        proyectos.add(new Proyecto(1, "juancho","recoleccion de aguas", "2022/02/22","2023/02/22", 20000, 100, "Proyecto basado en la recoleccion de aguas en bogota", "publicado","Gobierno"));
+        proyectos.add(new Proyecto(0, "juancho", "recoleccion de aguas", "2022/02/22", "2023/02/22", 20000, 100, "Proyecto basado en la recoleccion de aguas en bogota", "publicado", "Gobierno"));
     }
 
     @Override
     public void create(Object obj) {
         if (obj instanceof Proyecto) {
+            boolean igual = true;
             Proyecto m = (Proyecto) obj;
-            m.setIdproyecto(proyectos.size() + 1);
-            proyectos.add(m);
+            for (Proyecto pro : proyectos) {
+                if (pro.getIdproyecto() == m.getIdproyecto() && pro.getResponsable().equals(m.getResponsable())) {
+                    igual = true;
+                    break;
+                } else {
+                    igual = false;
+                }
+            }
+            if (igual == true) {
+            } else {
+                m.setIdproyecto(proyectos.size());
+                proyectos.add(m);
+            }
+
         } else if (obj instanceof Usuario) {
             Usuario m = (Usuario) obj;
+            System.out.println(m.getLogin());
             for (Usuario us : usuarios) {
                 if (us.getLogin().equals(m.getLogin())) {
                     System.out.println("El usuario '" + m.getLogin() + "' ya ha sido registrado en el sistema");
-                }
-                if (us.getDocumento() == m.getDocumento()) {
-                    System.out.println("El usuario con documento '" + m.getDocumento() + "' ya ha sido registrado en el sistema");
+                } else {
+                    usuarios.add(m);
+                    break;
                 }
             }
-            usuarios.add(m);
         }
     }
 
@@ -60,7 +73,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMock {
             Proyecto proyecto;
             for (int i = 0; i < proyectos.size(); i++) {
                 proyecto = proyectos.get(i);
-                if (proyecto.getIdproyecto()==editar.getIdproyecto()) {
+                if (proyecto.getIdproyecto() == editar.getIdproyecto()) {
                     proyectos.set(i, editar);
                     break;
                 }
